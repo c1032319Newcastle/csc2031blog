@@ -5,5 +5,5 @@ from wtforms.validators import DataRequired
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[DataRequired()])
-    password = PasswordField()
+    password = PasswordField(validators=[DataRequired()])
     submit = SubmitField()
