@@ -5,9 +5,9 @@ import re
 
 
 def validate_data(self, data_field):
-    p = re.compile("/d + [a-z]/g")
+    p = re.compile(r'(?=.*\d)(?=.*[a-z])')
     if not p.match(data_field.data):
-        raise ValidationError("MIn. 1 digit and 1 lower case letter required")
+        raise ValidationError("Minimum 1 digit and 1 lower case letter required")
 
 
 def char_check(form, field):
@@ -20,5 +20,6 @@ def char_check(form, field):
 
 class RegisterForm(FlaskForm):
     username = EmailField(validators=[DataRequired(), Email(), char_check])
-    password = PasswordField(validators=[DataRequired(), Length(min=8, max=15), char_check])
+    password = PasswordField(validators=[DataRequired(), Length(min=8, max=15), char_check, validate_data])
+    # confirm_password = PasswordField(validators=[DataRequired()])
     submit = SubmitField()
