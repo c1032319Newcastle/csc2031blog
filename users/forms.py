@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, EmailField
-from wtforms.validators import DataRequired, Email, Length, ValidationError
+from wtforms.validators import DataRequired, Email, Length, ValidationError, EqualTo
 import re
 
 
@@ -21,5 +21,5 @@ def char_check(form, field):
 class RegisterForm(FlaskForm):
     username = EmailField(validators=[DataRequired(), Email(), char_check])
     password = PasswordField(validators=[DataRequired(), Length(min=8, max=15), char_check, validate_data])
-    # confirm_password = PasswordField(validators=[DataRequired()])
+    confirm_password = PasswordField(validators=[DataRequired(), EqualTo("password", message="Passwords do not match")])
     submit = SubmitField()
